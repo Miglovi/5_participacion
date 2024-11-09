@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Producto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://emprendepyme.net/wp-content/uploads/2023/03/comercializar-productos-1200x742.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            margin: 0;
+            padding: 20px;
+            color: #333; 
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff; 
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); 
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.9); 
+            padding: 20px;
+            border-radius: 8px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+            max-width: 400px; 
+            margin: auto; 
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px; 
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%; 
+            padding: 10px; 
+            margin-bottom: 15px; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            box-sizing: border-box; 
+        }
+
+        input[type="submit"] {
+            background-color: #28a745; 
+            color: white; 
+            padding: 10px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+            width: 100%; /* Ancho completo */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838; 
+        }
+
+        a {
+            display: block; 
+            text-align: center; 
+            margin-top: 20px; 
+            color: #007bff; 
+            text-decoration: none; 
+            font-weight: bold; 
+        }
+
+        a:hover {
+            text-decoration: underline; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Crear Producto</h1>
+    <form method="POST">
+        <label for="descripcion">Descripción:</label>
+        <input type="text" name="descripcion" required>
+        
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" name="cantidad" required>
+        
+        <label for="precio">Precio:</label>
+        <input type="number" step="0.01" name="precio" required>
+        
+        <input type="submit" value="Crear">
+    </form>
+    <a href="{{ url_for('index') }}">Volver a la lista</a>
+</body>
+</html>
