@@ -3,66 +3,64 @@ import sqlite3
 
 app = Flask(__name__)
 
+DATABASE = 'almacen.db'
+
+# Conectar a la base de datos
 def connect_db():
-    conn = sqlite3.connect('almacen.db')
+    conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
+# Inicialización de la base de datos
 def init_db():
-    conn = connect_db()
-    cursor = conn.cursor()
-    cursor.execute('DELETE FROM producto')
-    cursor.execute('DELETE FROM sqlite_sequence WHERE name="producto"')
-
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS producto (
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''CREATE TABLE IF NOT EXISTS producto (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             descripcion TEXT NOT NULL,
             cantidad INTEGER NOT NULL,
             precio REAL NOT NULL
-        )
-    ''')
-    conn.commit()
-    conn.close()
+        )''')
+        conn.commit()
 
+# Función para crear un producto
 def create_product(descripcion, cantidad, precio):
-    conn = connect_db()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO producto (descripcion, cantidad, precio) VALUES (?, ?, ?)",
-                   (descripcion, cantidad, precio))
-    conn.commit()
-    conn.close()
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''INSERT INTO producto (descripcion, cantidad, precio) 
+                          VALUES (?, ?, ?)''', (descripcion, cantidad, precio))
+        conn.commit()
 
+# Función para obtener todos los productos
 def get_all_products():
-    conn = connect_db()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM producto")
-    products = cursor.fetchall()
-    conn.close()
-    return products
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM producto')
+        return cursor.fetchall()
 
+# Función para obtener un producto específico
 def get_product(product_id):
-    conn = connect_db()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM producto WHERE id = ?", (product_id,))
-    product = cursor.fetchone()
-    conn.close()
-    return product
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM producto WHERE id = ?', (product_id,))
+        return cursor.fetchone()
 
+# Función para actualizar un producto
 def update_product(product_id, descripcion, cantidad, precio):
-    conn = connect_db()
-    cursor = conn.cursor()
-    cursor.execute("UPDATE producto SET descripcion = ?, cantidad = ?, precio = ? WHERE id = ?",
-                   (descripcion, cantidad, precio, product_id))
-    conn.commit()
-    conn.close()
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''UPDATE producto SET descripcion = ?, cantidad = ?, precio = ? 
+                          WHERE id = ?''', (descripcion, cantidad, precio, product_id))
+        conn.commit()
 
+# Función para eliminar un producto
 def delete_product(product_id):
-    conn = connect_db()
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM producto WHERE id = ?", (product_id,))
-    conn.commit()
-    conn.close()
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM producto WHERE id = ?', (product_id,))
+        conn.commit()
+
+# Rutas de la aplicación
 
 @app.route('/')
 def index():
@@ -96,5 +94,5 @@ def delete(product_id):
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    init_db()  
+    init_db()  # Inicializar la base de datos
     app.run(debug=True)

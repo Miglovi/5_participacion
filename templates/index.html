@@ -3,86 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD de Productos</title>
+    <title>Lista de Productos</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-image: url('https://emprendepyme.net/wp-content/uploads/2023/03/comercializar-productos-1200x742.jpg'); 
-            background-size: cover; 
-            background-position: center; 
+            font-family: 'Arial', sans-serif;
+            background-color: #F7F7F7;
+            color: #333;
             margin: 0;
             padding: 20px;
-            color: #333; 
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
         }
 
         h1 {
             text-align: center;
-            color: #fff; 
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); 
-        }
-
-        a {
-            text-decoration: none;
             color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .btn-create {
-            background-color: #28a745; 
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-
-        .btn-edit {
-            background-color: #007bff; 
-            padding: 5px 10px;
-            border-radius: 5px;
-            color: white;
-        }
-
-        .btn-delete {
-            background-color: #dc3545; 
-            padding: 5px 10px;
-            border-radius: 5px;
-            color: white;
-        }
-
-        .btn-create:hover {
-            background-color: #218838; 
-        }
-
-        .btn-edit:hover {
-            background-color: #0056b3; 
-        }
-
-        .btn-delete:hover {
-            background-color: #c82333; 
+            margin-bottom: 30px;
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
             margin-top: 20px;
-            background-color: rgba(255, 255, 255, 0.8); 
-            border-radius: 8px; 
-            overflow: hidden; 
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         th, td {
-            padding: 12px;
+            padding: 12px 20px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
         }
 
         th {
-            background-color: #007bff; 
+            background-color: #ff7e5f;
             color: white;
         }
 
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
         tr:hover {
-            background-color: #f1f1f1; 
+            background-color: #ffe6e6;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin-right: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-create {
+            background-color: #feb47b;
+        }
+
+        .btn-edit {
+            background-color: #4caf50;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+        }
+
+        a:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -91,7 +79,7 @@
     <a href="{{ url_for('create') }}" class="btn-create">Crear Producto</a>
     <table>
         <tr>
-            <th>id</th>
+            <th>ID</th>
             <th>Descripción</th>
             <th>Cantidad</th>
             <th>Precio</th>
@@ -112,3 +100,4 @@
     </table>
 </body>
 </html>
+
